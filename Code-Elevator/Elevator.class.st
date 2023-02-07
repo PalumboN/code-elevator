@@ -70,14 +70,20 @@ Elevator >> executeCommand [
 ]
 
 { #category : #asd }
-Elevator >> go: anInteger [ 
-	self shouldBeImplemented.
+Elevator >> go: aFloor [
+
+	calls add: (Call new
+			 floor: aFloor;
+			 direction: Up new;
+			 yourself).
+
+	nextCommand := self calculateNextCommand
 ]
 
 { #category : #'as yet unclassified' }
 Elevator >> goDown [
 
-	currentFloor := currentFloor + 1
+	currentFloor := currentFloor - 1
 ]
 
 { #category : #'as yet unclassified' }
@@ -142,5 +148,13 @@ Elevator >> userHasEntered [
 
 	self removeCall: self calls first.
 	people := people + 1.
+	nextCommand := self calculateNextCommand
+]
+
+{ #category : #asd }
+Elevator >> userHasExit [
+
+	self removeCall: self calls first.
+	people := people - 1.
 	nextCommand := self calculateNextCommand
 ]

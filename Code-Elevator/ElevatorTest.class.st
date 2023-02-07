@@ -22,6 +22,27 @@ ElevatorTest >> setUp [
 ]
 
 { #category : #tests }
+ElevatorTest >> testElevatorGoesDownAndPeopleExit [
+
+	elevator currentFloor: 3.
+	elevator people: 1.
+	self assertCommand: elevator nextCommand equals: Nothing.
+	elevator go: 1.
+	self assertCommand: elevator nextCommand equals: Down.
+	elevator executeCommand.
+	self assert: elevator currentFloor equals: 2.
+	self assertCommand: elevator nextCommand equals: Down.
+	elevator executeCommand.
+	self assert: elevator currentFloor equals: 1.
+	self assertCommand: elevator nextCommand equals: Open.
+	elevator userHasExit.
+	self assert: elevator people equals: 0.
+	self assertCommand: elevator nextCommand equals: Close.
+	elevator executeCommand.
+	self assertCommand: elevator nextCommand equals: Nothing
+]
+
+{ #category : #tests }
 ElevatorTest >> testElevatorIsCalledDown [
 
 	elevator currentFloor: 3.
@@ -39,9 +60,24 @@ ElevatorTest >> testElevatorIsCalledUp [
 { #category : #tests }
 ElevatorTest >> testElevatorIsCalledUpAndPeopleEnter [
 
-	elevator currentFloor: 3.
-	elevator people: 1.
-	elevator go: 1.
-	
+	self assert: elevator currentFloor equals: 0.
+	elevator call: 3.
+	self assertCommand: elevator nextCommand equals: Up.
+	elevator executeCommand.
+	self assert: elevator currentFloor equals: 1.
+	self assertCommand: elevator nextCommand equals: Up.
+	elevator executeCommand.
+	self assert: elevator currentFloor equals: 2.
+	self assertCommand: elevator nextCommand equals: Up.
+	elevator executeCommand.
+	self assert: elevator currentFloor equals: 3.
+	self assertCommand: elevator nextCommand equals: Open.
+	elevator executeCommand.
+	self assertCommand: elevator nextCommand equals: Open.
+	elevator userHasEntered.
+	self assert: elevator people equals: 1.
+	self assertCommand: elevator nextCommand equals: Close.
+	elevator executeCommand.
+	self assertCommand: elevator nextCommand equals: Nothing.
 	
 ]

@@ -3,3 +3,9 @@ Class {
 	#superclass : #ElevatorCommand,
 	#category : #'Code-Elevator'
 }
+
+{ #category : #asd }
+Nothing >> executeOn: anElevator [
+
+	
+]
