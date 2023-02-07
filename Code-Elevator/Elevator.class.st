@@ -14,17 +14,18 @@ Class {
 { #category : #asd }
 Elevator >> calculateNextCommand [
 
-	| nextCall |
+	| nextCall currentCalls |
+	currentCalls := self calls.
 	self isOpen ifTrue: [ 
-		calls ifEmpty: [ ^ Close new ].
+		currentCalls ifEmpty: [ ^ Close new ].
 		"If it is in the same floor, we should wait"
-		calls first floor = currentFloor
+		currentCalls first floor = currentFloor
 			ifTrue: [ ^ Nothing new ]
 			ifFalse: [ ^ Close new ] ].
 
-	calls ifEmpty: [ ^ Nothing new ].
+	currentCalls ifEmpty: [ ^ Nothing new ].
 
-	nextCall := calls first.
+	nextCall := currentCalls first.
 	nextCall floor > currentFloor ifTrue: [ ^ Up new ].
 	nextCall floor < currentFloor ifTrue: [ ^ Down new ].
 	nextCall floor = currentFloor ifTrue: [ ^ Open new ]
@@ -75,7 +76,7 @@ Elevator >> executeCommand [
 { #category : #quering }
 Elevator >> floorCalls [
 
-	^ calls collect: #floor
+	^ self calls collect: #floor
 ]
 
 { #category : #asd }
