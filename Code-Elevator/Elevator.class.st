@@ -45,7 +45,12 @@ Elevator >> call: aFloor [
 Elevator >> calls [
 
 	^ calls sorted: [ :a :b |
-		  (currentFloor - a floor) abs < (currentFloor - b floor) abs ]
+		  (currentFloor - a floor) abs = (currentFloor - b floor) abs
+			  ifTrue: [
+				  (currentFloor - a floor) abs + (self peopleAt: a floor)
+				  < ((currentFloor - b floor) abs + (self peopleAt: b floor)) ]
+			  ifFalse: [
+			  (currentFloor - a floor) abs < (currentFloor - b floor) abs ] ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -158,6 +163,12 @@ Elevator >> people [
 Elevator >> people: anObject [
 
 	people := anObject
+]
+
+{ #category : #asd }
+Elevator >> peopleAt: aFloor [
+
+	^ calls count: [ :c | c floor = aFloor ]
 ]
 
 { #category : #accessing }

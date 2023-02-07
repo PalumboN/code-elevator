@@ -214,3 +214,9 @@ ElevatorTest >> testElevatorIsOpenAndCall [
 	self assertCommand: elevator nextCommand equals: Open.
 
 ]
+
+{ #category : #tests }
+ElevatorTest >> testPerformance [
+
+	
+]
