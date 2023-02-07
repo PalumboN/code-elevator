@@ -5,9 +5,9 @@ Class {
 }
 
 { #category : #asd }
-Open >> executeOn: anElevator [ 
+Open >> executeOn: anElevator [
 
-
+	anElevator open: true
 ]
 
 { #category : #testing }

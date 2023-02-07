@@ -5,7 +5,8 @@ Class {
 		'currentFloor',
 		'nextCommand',
 		'people',
-		'calls'
+		'calls',
+		'isOpen'
 	],
 	#category : #'Code-Elevator'
 }
@@ -14,11 +15,11 @@ Class {
 Elevator >> calculateNextCommand [
 
 	| nextCall |
-	nextCommand isOpen ifTrue: [
+	self isOpen ifTrue: [ 
 		calls ifEmpty: [ ^ Close new ].
 		"If it is in the same floor, we should wait"
 		calls first floor = currentFloor
-			ifTrue: [ ^ Open new ]
+			ifTrue: [ ^ Nothing new ]
 			ifFalse: [ ^ Close new ] ].
 
 	calls ifEmpty: [ ^ Nothing new ].
@@ -98,7 +99,14 @@ Elevator >> initialize [
 	nextCommand := Nothing new.
 	currentFloor := 0.
 	people := 0.
+	isOpen := false.
 	calls := OrderedCollection new
+]
+
+{ #category : #accessing }
+Elevator >> isOpen [
+
+	^ isOpen
 ]
 
 { #category : #accessing }
@@ -123,6 +131,12 @@ Elevator >> nothing [
 Elevator >> open [
 
 	nextCommand := Open new
+]
+
+{ #category : #asd }
+Elevator >> open: aBoolean [ 
+	
+	isOpen := aBoolean
 ]
 
 { #category : #accessing }

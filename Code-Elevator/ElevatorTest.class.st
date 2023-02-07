@@ -37,7 +37,7 @@ ElevatorTest >> testElevatorGoesDownAndPeopleExit [
 	self assertCommand: elevator nextCommand equals: Open.
 	elevator userHasExit.
 	self assert: elevator people equals: 0.
-	self assertCommand: elevator nextCommand equals: Close.
+	self assertCommand: elevator nextCommand equals: Nothing.
 	elevator executeCommand.
 	self assertCommand: elevator nextCommand equals: Nothing
 ]
@@ -73,7 +73,7 @@ ElevatorTest >> testElevatorIsCalledUpAndPeopleEnter [
 	self assert: elevator currentFloor equals: 3.
 	self assertCommand: elevator nextCommand equals: Open.
 	elevator executeCommand.
-	self assertCommand: elevator nextCommand equals: Open.
+	self assertCommand: elevator nextCommand equals: Nothing.
 	elevator userHasEntered.
 	self assert: elevator people equals: 1.
 	self assertCommand: elevator nextCommand equals: Close.
