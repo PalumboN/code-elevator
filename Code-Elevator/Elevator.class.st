@@ -42,7 +42,9 @@ Elevator >> call: aFloor [
 
 { #category : #accessing }
 Elevator >> calls [
-	^ calls
+
+	^ calls sorted: [ :a :b |
+		  (currentFloor - a floor) abs < (currentFloor - b floor) abs ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -68,6 +70,12 @@ Elevator >> executeCommand [
 
 	nextCommand executeOn: self.
 	nextCommand := self calculateNextCommand
+]
+
+{ #category : #quering }
+Elevator >> floorCalls [
+
+	^ calls collect: #floor
 ]
 
 { #category : #asd }

@@ -25,6 +25,7 @@ ElevatorTest >> setUp [
 ElevatorTest >> testElevatorCalledManyTimes [
 
 	self assertCommand: elevator nextCommand equals: Nothing.
+
 	elevator call: 5.
 	elevator executeCommand.
 	elevator call: 3.
@@ -35,26 +36,59 @@ ElevatorTest >> testElevatorCalledManyTimes [
 	elevator executeCommand.
 	elevator executeCommand.
 
+	self assert: elevator calls size equals: 3.
+	self assert: elevator currentFloor equals: 5.
+
 	elevator userHasEntered.
+
+	self assert: elevator people equals: 1.
+	self assertCollection: elevator floorCalls hasSameElements: { 3. 3 }.
+
 	elevator go: 3.
+	self
+		assertCollection: elevator floorCalls
+		hasSameElements: { 3. 3. 3 }.
 
 	elevator executeCommand.
 	elevator executeCommand.
 	elevator executeCommand.
 	elevator executeCommand.
+
+	self assert: elevator currentFloor equals: 3.
+	self assert: elevator people equals: 1.
+
 	elevator userHasEntered.
 	elevator go: 2.
 	elevator userHasEntered.
 	elevator go: 0.
 	elevator userHasExit.
 	elevator call: 2.
+
+	self assert: elevator people equals: 2.
+	self
+		assertCollection: elevator floorCalls
+		hasSameElements: { 2. 0. 2 }.
+
 	elevator executeCommand.
 	elevator executeCommand.
 	elevator executeCommand.
+
+	self assert: elevator currentFloor equals: 2.
+
 	elevator userHasExit.
 	elevator userHasEntered.
+
+	self assert: elevator people equals: 2.
+	self assertCollection: elevator floorCalls hasSameElements: { 0 }.
+
+
 	elevator go: 0.
 	elevator call: 0.
+
+	self assert: elevator people equals: 2.
+	self
+		assertCollection: elevator floorCalls
+		hasSameElements: { 0. 0. 0 }
 ]
 
 { #category : #tests }
