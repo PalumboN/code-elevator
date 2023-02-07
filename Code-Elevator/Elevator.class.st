@@ -75,7 +75,7 @@ Elevator >> go: aFloor [
 
 	calls add: (Call new
 			 floor: aFloor;
-			 direction: Up new;
+			 direction: Nothing new;
 			 yourself).
 
 	nextCommand := self calculateNextCommand
@@ -160,7 +160,7 @@ Elevator >> removeCall: aCall [
 { #category : #asd }
 Elevator >> userHasEntered [
 
-	self removeCall: self calls first.
+	self removeCall: (self calls detect: [ :c | c floor = currentFloor ]).
 	people := people + 1.
 	nextCommand := self calculateNextCommand
 ]
@@ -168,7 +168,7 @@ Elevator >> userHasEntered [
 { #category : #asd }
 Elevator >> userHasExit [
 
-	self removeCall: self calls first.
+	self removeCall: (self calls detect: [ :c | c floor = currentFloor ]).
 	people := people - 1.
 	nextCommand := self calculateNextCommand
 ]
